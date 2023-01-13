@@ -15,6 +15,6 @@ describe('Testando o productModels', function () {
     // Act
     const result = await productModels.getAll();
     // Assert
-    expect(result).to.be.deep.equal(happyQueryAll)
+    expect(result).to.be.deep.equal(happyQueryAll);
   })
 })
