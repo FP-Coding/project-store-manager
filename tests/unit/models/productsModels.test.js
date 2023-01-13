@@ -2,7 +2,8 @@ const { expect } = require('chai');
 const sinon = require('sinon')
 
 const { happyQueryAll, happyQueryById } = require('./mocks/productsModels.mock');
-const { productModels } = require('../../../src/models')
+const { productModels } = require('../../../src/models');
+const connection = require('../../../src/models/connection');
 
 describe('Testando o productModels', function () {
   afterEach(() => {
@@ -11,7 +12,7 @@ describe('Testando o productModels', function () {
 
   it('Testando se é retornado todos os itens corretamente', async function () {
     // Arrange
-    sinon.stub(productModels, 'getAll').resolves([happyQueryAll])
+    sinon.stub(connection, 'execute').resolves([happyQueryAll])
     // Act
     const result = await productModels.getAll();
     // Assert
