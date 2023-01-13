@@ -18,4 +18,12 @@ describe('Testando o productModels', function () {
     // Assert
     expect(result).to.be.deep.equal(happyQueryAll);
   })
+  it('Testando se é retornado corretamente o elemento quando é passado um id correto', async function() {
+    // Arrange
+    sinon.stub(connection, 'execute').resolves([[happyQueryById]])
+    // Act
+    const result = await productModels.getById(1);
+    // Assert
+    expect(result).to.be.deep.equal(happyQueryById);
+  })
 })
