@@ -28,7 +28,7 @@ describe('Testando service de Products', function () {
     const result = await productsService.getById(1)
     // Assert
     expect(result.type).to.be.equal(null);
-    expect(result.message).to.be.deep.equal(happyQueryAll)
+    expect(result.message).to.be.deep.equal(happyQueryById)
   })
 
   it('Testando getById da productsServices passando um id de um produto não existente', async function () {

@@ -27,7 +27,7 @@ describe('Testando o productModels', function () {
     expect(result).to.be.deep.equal(happyQueryById);
   })
   it('Testando se é retornado undefined quando é passado um id incorreto', async function () {
-    sinon.stub(connection, 'execute').throws(new Error(''))
+    sinon.stub(connection, 'execute').resolves(undefined)
 
     const result = await productModels.getById(100);
 
