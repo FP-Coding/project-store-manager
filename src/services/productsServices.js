@@ -9,8 +9,7 @@ const getAll = async () => {
 const getById = async (id) => {
   const error = validateId(id);
   if (error.type) return error;
-  const result = await productModels.getById();
-  if (!result) return { type: 'ID_NOT_FOUND', message: '"id" not found' };
+  const result = await productModels.getById(id);
   return { type: null, message: result };
 };
 
