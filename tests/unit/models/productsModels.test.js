@@ -11,19 +11,26 @@ describe('Testando o productModels', function () {
   })
 
   it('Testando se é retornado todos os itens corretamente', async function () {
-    // Arrange
+
     sinon.stub(connection, 'execute').resolves([happyQueryAll])
-    // Act
+
     const result = await productModels.getAll();
-    // Assert
+
     expect(result).to.be.deep.equal(happyQueryAll);
   })
   it('Testando se é retornado corretamente o elemento quando é passado um id correto', async function() {
-    // Arrange
+
     sinon.stub(connection, 'execute').resolves([[happyQueryById]])
-    // Act
+
     const result = await productModels.getById(1);
-    // Assert
+
     expect(result).to.be.deep.equal(happyQueryById);
+  })
+  it('Testando se é retornado undefined quando é passado um id incorreto', async function () {
+    sinon.stub(connection, 'execute').throws(new Error(''))
+
+    const result = await productModels.getById(100);
+
+    expect(result).to.be.equal(undefined);
   })
 })
