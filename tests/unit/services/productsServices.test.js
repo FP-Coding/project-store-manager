@@ -1,7 +1,6 @@
 const { expect } = require('chai')
 const sinon = require('sinon')
 
-// const validationInputValues = require('../../../src/services/validations/validationInputValues')
 const { productModels } = require('../../../src/models')
 const { happyQueryAll, happyQueryById } = require('./mocks/productsServices.mock')
 const { productsService } = require('../../../src/services');
