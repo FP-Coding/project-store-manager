@@ -14,7 +14,10 @@ const getById = async (id) => {
   return { type: null, message: result };
 };
 
+const create = async () => {};
+
 module.exports = {
   getAll,
   getById,
+  create,
 };
