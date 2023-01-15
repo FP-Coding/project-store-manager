@@ -1,4 +1,4 @@
-const { salesModels, productModels } = require('../models');
+const { salesModels/* , productModels */ } = require('../models');
 
 const create = async (sales) => {
   const ids = await salesModels(sales);
