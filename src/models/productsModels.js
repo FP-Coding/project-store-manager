@@ -12,6 +12,13 @@ const getById = async (productId) => {
   return result;
 };
 
+const getByIds = async (ids) => {
+  const placeholders = ids.map((_) => '?').join(', ');
+  const query = `SELECT * FROM StoreManager.products WHERE id IN (${placeholders})`;
+  const [result] = await connection.execute(query, ids);
+  return result;
+};
+
 const create = async (newProductName) => {
   const query = 'INSERT INTO StoreManager.products (name) VALUES (?)';
   const [{ insertId }] = await connection.execute(query, [newProductName]);
@@ -21,5 +28,6 @@ const create = async (newProductName) => {
 module.exports = {
   getAll,
   getById,
+  getByIds,
   create,
 };
