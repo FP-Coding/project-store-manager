@@ -1,4 +1,4 @@
-const { idSchema, nameProductSchema } = require('./schema');
+const { idSchema, nameProductSchema, salesSchema } = require('./schema');
 
 const validateId = (id) => {
   const { error } = idSchema.validate(id);
@@ -16,7 +16,18 @@ const validateNameProduct = (name) => {
   return { type: null, message: '' };
 };
 
+const validateArraySales = (arraySales) => {
+  const { error } = salesSchema.validate(arraySales);
+  if (error) {
+    return {
+      type: 'INVALID_VALUE', message: error.message,
+    };
+  }
+  return { type: null, message: '' };
+};
+
 module.exports = {
   validateId,
   validateNameProduct,
+  validateArraySales,
 };
