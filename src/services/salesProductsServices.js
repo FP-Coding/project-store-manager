@@ -16,9 +16,6 @@ const create = async (sales) => {
   const id = await salesProductsModels.create(sales);
   const products = await salesProductsModels.getById(id);
 
-  // const itemsSold = products
-  //   .map(({ product_id: productId, quantity }) => ({ productId, quantity }));
-
   const productsFormated = {
     id: products[0].sale_id,
     itemsSold: sales,
