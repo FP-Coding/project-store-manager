@@ -12,7 +12,14 @@ const getById = async (id) => {
   return result;
 };
 
+const getAll = async () => {
+  const query = 'SELECT * FROM StoreManager.sales';
+  const [result] = connection.execute(query);
+  return result;
+};
+
 module.exports = {
   create,
   getById,
+  getAll,
 };
