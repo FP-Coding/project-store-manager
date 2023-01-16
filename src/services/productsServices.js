@@ -21,8 +21,23 @@ const create = async (name) => {
   return { type: null, message: { id, name } };
 };
 
+const update = async (id, name) => {
+  const errorId = validateId(id);
+  if (errorId.type) return errorId;
+  const isAValidId = await productModels.getById(id);
+  if (!isAValidId) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+  const errorName = validateNameProduct(name);
+  if (errorName.type) return errorName;
+  const updatedProduct = await productModels.update(id, name);
+  if (updatedProduct !== 1) {
+    return { type: 'FAIL_UPDATE', message: 'Unable to update with this data' };
+  }
+  return { type: null, message: { id, name } };
+};
+
 module.exports = {
   getAll,
   getById,
   create,
+  update,
 };

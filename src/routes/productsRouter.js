@@ -4,9 +4,11 @@ const { nameValidate } = require('../middlewares');
 
 const route = Router();
 
-route.get('/', productsController.getAll);
-
 route.get('/:id', productsController.getById);
+
+route.put('/:id', nameValidate, productsController.update);
+
+route.get('/', productsController.getAll);
 
 route.post('/', nameValidate, productsController.create);
 
