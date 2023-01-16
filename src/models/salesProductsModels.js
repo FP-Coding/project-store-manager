@@ -1,4 +1,5 @@
 const snakeize = require('snakeize');
+const camelize = require('camelize');
 const connection = require('./connection');
 const salesModels = require('./salesModels');
 
@@ -33,8 +34,20 @@ const getById = async (id) => {
   return result;
 };
 
+const innerGetAll = async () => {
+  const query = `
+  SELECT s.id as sale_id, s.date, sp.product_id, sp.quantity
+  FROM StoreManager.sales_products AS sp
+    INNER JOIN
+  StoreManager.sales AS s
+    ON s.id = sp.sale_id`;
+  const [result] = await connection.execute(query);
+  return camelize(result);
+};
+
 module.exports = {
   create,
   getById,
   getAll,
+  innerGetAll,
 };

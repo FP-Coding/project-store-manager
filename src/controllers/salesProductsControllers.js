@@ -15,7 +15,14 @@ const getById = async (req, res) => {
   return res.status(200).json(message);
 };
 
+const innerGetAll = async (req, res) => {
+  const { type, message } = await salesProductsServices.innerGetAll();
+  if (type) return res.status(errorMap(type)).json({ message });
+  return res.status(200).json(message);
+};
+
 module.exports = {
   create,
   getById,
+  innerGetAll,
 };

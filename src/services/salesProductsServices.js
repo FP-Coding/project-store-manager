@@ -40,7 +40,13 @@ const getById = async (id) => {
   return { type: null, message: sales };
 };
 
+const innerGetAll = async () => {
+  const sales = await salesProductsModels.innerGetAll();
+  return { type: null, message: sales };
+};
+
 module.exports = {
   create,
   getById,
+  innerGetAll,
 };

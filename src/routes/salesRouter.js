@@ -4,10 +4,12 @@ const { salesProductsValidate } = require('../middlewares');
 
 const route = Router();
 
+route.get('/:id', salesProductsControllers.getById);
+
+route.get('/', salesProductsControllers.innerGetAll);
+
 route.post('/', salesProductsValidate.salesProductsValidateProductId,
   salesProductsValidate.salesProductsValidateQuantity,
   salesProductsControllers.create);
-
-route.get('/:id', salesProductsControllers.getById);
 
 module.exports = route;
