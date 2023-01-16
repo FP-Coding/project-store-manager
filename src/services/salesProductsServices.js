@@ -49,4 +49,5 @@ module.exports = {
   create,
   getById,
   innerGetAll,
+
 };
