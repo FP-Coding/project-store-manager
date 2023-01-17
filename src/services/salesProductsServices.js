@@ -1,15 +1,14 @@
 const camelize = require('camelize');
 const { salesModels, salesProductsModels, productModels } = require('../models');
-const { validateId } = require('./validations/validationInputValues');
+const { validateId, validateArraySales } = require('./validations/validationInputValues');
 
 const create = async (sales) => {
+  const error = validateArraySales(sales);
+  if (error.type) return error;
   const productsIds = sales.map(({ productId }) => productId);
-
   const productsFounded = await productModels.getByIds(productsIds);
-
   const idsProductsFounded = productsFounded
   .map(({ id }) => Number(id));
-
   const isSalesInProductsFounded = sales
     .every(({ productId }) => idsProductsFounded.includes(productId));
 
@@ -49,5 +48,4 @@ module.exports = {
   create,
   getById,
   innerGetAll,
-
 };

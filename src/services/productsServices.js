@@ -40,10 +40,7 @@ const deleteProduct = async (id) => {
   if (error.type) return error;
   const product = await productModels.getById(id);
   if (!product) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
-  const isDeleted = await productModels.deleteProduct(id);
-  if (isDeleted === 0) {
-    return { type: 'FAIL_TO_DELETE', message: 'Product has already been deleted' };
-  }
+  await productModels.deleteProduct(id);
   return { type: null, message: '' };
 };
 
