@@ -15,9 +15,8 @@ const getById = async (req, res) => {
   return res.status(200).json(message);
 };
 
-const innerGetAll = async (req, res) => {
-  const { type, message } = await salesProductsServices.innerGetAll();
-  if (type) return res.status(errorMap(type)).json({ message });
+const innerGetAll = async (_req, res) => {
+  const { message } = await salesProductsServices.innerGetAll();
   return res.status(200).json(message);
 };
 
