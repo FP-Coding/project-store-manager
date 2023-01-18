@@ -37,7 +37,7 @@ describe('Testando salesProducts Services', function () {
     const result = await salesProductsServices.create(wrongBodyProductId);
 
     expect(result.type).to.be.equal('INVALID_VALUE');
-    expect(result.message).to.be.deep.equal('"[0].productId" must be a number')
+    expect(result.message).to.be.deep.equal('"productId" must be a number')
   })
 
   it('Testando a criação de um relacionamento entre as tabelas sale e products falha ao passar um id de produto inexistente', async function () {
