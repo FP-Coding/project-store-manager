@@ -1,7 +1,7 @@
-const snakeize = require('snakeize');
 const camelize = require('camelize');
 const connection = require('./connection');
 const salesModels = require('./salesModels');
+const { getPlaceholdersAndColumns } = require('../utils/getPlaceholdersAndColumns');
 
 const getAll = async () => {
   const query = 'SELECT * FROM StoreManager.sales_products';
@@ -10,9 +10,7 @@ const getAll = async () => {
 };
 
 const create = async (sales) => {
-  const columns = Object.keys(snakeize(sales[0])).join(', ');
-
-  const placeholders = Object.keys(sales[0]).map((_) => '?').join(', ');
+  const { columns, placeholders } = getPlaceholdersAndColumns(sales[0]);
 
   const newSaleID = await salesModels.create();
 
@@ -45,9 +43,23 @@ const innerGetAll = async () => {
   return camelize(result);
 };
 
+const update = async ({ id, sales }) => {
+  const query = `
+  UPDATE StoreManager.sales_products
+  SET quantity = ?
+  WHERE sale_id = ? AND product_id = ?`;
+  const salesUpdated = sales.map(async (sale) => {
+    const [{ changedRows }] = await connection.execute(query, [sale.quantity, id, sale.productId]);
+    return changedRows;
+  });
+  await Promise.all(salesUpdated);
+  return salesUpdated.every(async (sale) => await sale === 1);
+};
+
 module.exports = {
   create,
   getById,
   getAll,
   innerGetAll,
+  update,
 };
