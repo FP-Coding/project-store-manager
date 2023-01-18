@@ -41,7 +41,6 @@ const search = async (searchTerm) => {
   const formatedSearch = `%${searchTerm}%`;
   const query = 'SELECT * FROM StoreManager.products WHERE name LIKE ?';
   const [result] = await connection.execute(query, [formatedSearch]);
-  console.log(result);
   return result;
 };
 

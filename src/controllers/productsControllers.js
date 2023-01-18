@@ -36,7 +36,6 @@ const deleteProduct = async (req, res) => {
 };
 
 const search = async (req, res) => {
-  console.log(req.query);
   const { q } = req.query;
   const { message } = await productsService.search(q);
   return res.status(200).json(message);
