@@ -1,10 +1,12 @@
 const { Router } = require('express');
-const { salesProductsControllers } = require('../controllers');
+const { salesProductsControllers, salesController } = require('../controllers');
 const { salesProductsValidate } = require('../middlewares');
 
 const route = Router();
 
 route.get('/:id', salesProductsControllers.getById);
+
+route.delete('/:id', salesController.deleteSale);
 
 route.get('/', salesProductsControllers.innerGetAll);
 
