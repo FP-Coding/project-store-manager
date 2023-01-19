@@ -47,17 +47,23 @@ const innerGetAll = async () => {
 const update = async ({ id, sales }) => {
   const errorId = validateId(id);
   if (errorId.type) return errorId;
+
   const errorSales = validateArraySales(sales);
   if (errorSales.type) return errorSales;
+
   const existSale = await salesModels.getById(id);
   if (!existSale) return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
+
   const productsIds = sales.map(({ productId }) => productId);
   const productsFounded = await productModels.getByIds(productsIds);
   const idsProductsFounded = productsFounded
-  .map(({ id: idFounded }) => Number(idFounded));
-  if (idsProductsFounded.length !== productsIds.length) {
+    .map(({ id: idFounded }) => Number(idFounded));
+  const isSalesInProductsFounded = sales
+    .every(({ productId }) => idsProductsFounded.includes(productId));
+  if (!isSalesInProductsFounded) {
     return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
   }
+
   await salesProductsModels.update({ id, sales });
   return { type: null, message: { saleId: id, itemsUpdated: sales } };
 };

@@ -20,10 +20,6 @@ const happyQueryByRouteParam = [
     "name": "Martelo de Thor"
   },
   {
-    "id": 2,
-    "name": "Traje de encolhimento"
-  },
-  {
     "id": 3,
     "name": "Manopla do Thanos"
   }

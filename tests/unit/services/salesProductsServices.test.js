@@ -83,4 +83,47 @@ describe('Testando salesProducts Services', function () {
     expect(result.type).to.be.equal(null);
     expect(result.message).to.be.deep.equal(responseGetInnerAll)
   })
+
+  it('atualização de uma sale falha ao passar um id inválido', async function () {
+    const result = await salesProductsServices.update({ id: 'a', sales: rightSaleBody });
+
+    expect(result.type).to.be.equal('INVALID_VALUE');
+    expect(result.message).to.be.deep.equal('"id" must be a number')
+  })
+
+  it('atualização de uma sale falha ao passar um body inválido', async function () {
+    const result = await salesProductsServices.update({ id: 1, sales: wrongBodyProductId });
+
+    expect(result.type).to.be.equal('INVALID_VALUE');
+    expect(result.message).to.be.deep.equal('"productId" must be a number')
+  })
+
+  it('atualização de uma sale falha ao passar um id de um sale inexistente', async function () {
+    sinon.stub(salesModels, 'getById').resolves(undefined);
+
+    const result = await salesProductsServices.update({ id: 9999, sales: rightSaleBody });
+
+    expect(result.type).to.be.equal('SALE_NOT_FOUND');
+    expect(result.message).to.be.deep.equal('Sale not found');
+  })
+
+  it('atualização de uma sale é feita com sucesso', async function () {
+    sinon.stub(salesModels, 'getById').resolves(responseSales);
+    sinon.stub(productModels, 'getByIds').resolves(responseGetByIds1)
+
+    const result = await salesProductsServices.update({ id: 1, sales: rightSaleBody });
+
+    expect(result.type).to.be.equal(null);
+    expect(result.message).to.be.deep.equal({ saleId: 1, itemsUpdated: rightSaleBody });
+  })
+
+  it('atualização de uma sale falha ao passar um id de produto inexistente', async function () {
+    sinon.stub(salesModels, 'getById').resolves(responseSales);
+    sinon.stub(productModels, 'getByIds').resolves(responseGetByIds2)
+
+    const result = await salesProductsServices.update({ id: 1, sales: nonexistentProductIdBody });
+
+    expect(result.type).to.be.equal('PRODUCT_NOT_FOUND');
+    expect(result.message).to.be.deep.equal('Product not found');
+  })
 })

@@ -2,7 +2,7 @@ const { expect } = require('chai')
 const sinon = require('sinon')
 
 const { productModels } = require('../../../src/models')
-const { happyQueryAll, happyQueryById } = require('./mocks/productsServices.mock')
+const { happyQueryAll, happyQueryById, happyQueryByRouteParam } = require('./mocks/productsServices.mock')
 const { productsService } = require('../../../src/services');
 
 describe('Testando service de Products', function () {
@@ -134,5 +134,14 @@ describe('Testando service de Products', function () {
     // Assert
     expect(result.type).to.be.equal('PRODUCT_NOT_FOUND');
     expect(result.message).to.be.deep.equal('Product not found')
+  })
+  it('Testando a busca de produtos pelo route param', async function () {
+    // Arrange
+    sinon.stub(productModels, 'search').resolves(happyQueryByRouteParam)
+    // Act
+    const result = await productsService.search('th')
+    // Assert
+    expect(result.type).to.be.equal(null);
+    expect(result.message).to.be.deep.equal(happyQueryByRouteParam)
   })
 })
