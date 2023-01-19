@@ -4,16 +4,16 @@
     "colId": "history",
     "containerId": "",
     "name": "https://localhost:3000/products",
-    "url": "http://localhost:3000/products/search?q=f",
+    "url": "http://localhost:3000/products/search?q=ma",
     "method": "GET",
     "sortNum": 0,
     "created": "2023-01-13T20:14:13.670Z",
-    "modified": "2023-01-18T18:45:25.868Z",
+    "modified": "2023-01-19T13:51:13.095Z",
     "headers": [],
     "params": [
       {
         "name": "q",
-        "value": "f",
+        "value": "ma",
         "isPath": false
       }
     ],

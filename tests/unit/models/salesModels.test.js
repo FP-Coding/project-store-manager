@@ -38,4 +38,11 @@ describe('Testando salesModels', function () {
 
     expect(result).to.be.deep.equal(salesMock);
   })
+  it('Testando a deleção de uma sale', async function () {
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+
+    const result = await salesModels.deleteSale();
+
+    expect(result).to.be.equal(1);
+  })
 })

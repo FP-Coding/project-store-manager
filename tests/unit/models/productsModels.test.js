@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon')
 
-const { happyQueryAll, happyQueryById } = require('./mocks/productsModels.mock');
+const { happyQueryAll, happyQueryById, happyQueryByRouteParam } = require('./mocks/productsModels.mock');
 const { productModels } = require('../../../src/models');
 const connection = require('../../../src/models/connection');
 
@@ -60,5 +60,12 @@ describe('Testando o productModels', function () {
     const result = await productModels.deleteProduct(1);
 
     expect(result).to.be.equal(1);
+  })
+  it('Testando se os elementos que possuem o route param são retornados corretamente', async function () {
+    sinon.stub(connection, 'execute').resolves([[happyQueryByRouteParam[0], happyQueryByRouteParam[3]]])
+
+    const result = await productModels.search('th');
+
+    expect(result).to.be.deep.equal([happyQueryByRouteParam[0], happyQueryByRouteParam[3]]);
   })
 })

@@ -40,4 +40,11 @@ describe('Testando salesProductsModels', function () {
 
     expect(result).to.be.deep.equal(camelize(innerGetAllMock))
   })
+  it('Testando se a listagem da sale pelo id acontece corretamente', async function () {
+    sinon.stub(connection, 'execute').onFirstCall().resolves([{ affectedRows: 1 }]).onSecondCall().resolves([{ affectedRows: 1 }])
+
+    const result = await salesProductsModels.update({ id: 1, sales: inputSales });
+
+    expect(result).to.be.equal(true)
+  })
 })
