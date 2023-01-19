@@ -94,4 +94,34 @@ describe('Testando salesProductsServices', function () {
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(responseInnerGetAll);
   })
+
+  it('Testando função update passando id invalido',async function () {
+    const req = { params: { id: 'a' }, body: rightSaleBody };
+    const res = {};
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    sinon.stub(salesProductsServices, 'update').resolves({ type: 'INVALID_VALUE', message: '"id" must be a number' })
+
+    await salesProductsControllers.update(req,res);
+
+    expect(res.status).to.have.been.calledWith(400);
+    expect(res.json).to.have.been.calledWith({ message: '"id" must be a number' });
+  })
+
+  it('Testando função update passando id invalido',async function () {
+    const req = { params: { id: 1 }, body: rightSaleBody };
+    const res = {};
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    sinon.stub(salesProductsServices, 'update').resolves({ type: null, message: { saleId: 1, itemsUpdated: rightSaleBody } })
+
+    await salesProductsControllers.update(req,res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith({ saleId: 1, itemsUpdated: rightSaleBody });
+  })
 })

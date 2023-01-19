@@ -8,7 +8,7 @@ chai.use(sinonChai)
 const { productsService } = require('../../../src/services');
 const { productsController } = require('../../../src/controllers');
 
-const { happyQueryAll, happyQueryById } = require('./mocks/productsControllers.mock')
+const { happyQueryAll, happyQueryById, happyQueryByRouteParam } = require('./mocks/productsControllers.mock')
 
 describe('Testando a camada controller de products', function () {
   afterEach(() => {
@@ -119,7 +119,7 @@ describe('Testando a camada controller de products', function () {
     expect(res.json).to.have.been.calledWith({ message: '"name" length must be at least 5 characters long' })
   })
 
-  it('Testando função delete', async function () {
+  it('Testando função delete passando um id de produto inexistente', async function () {
     const req = { params: { id: 9999 } };
     const res = {};
 
@@ -134,7 +134,7 @@ describe('Testando a camada controller de products', function () {
     expect(res.json).to.have.been.calledWith({ message: 'Product not found' })
   })
 
-  it('Testando função delete', async function () {
+  it('Testando função delete com sucesso', async function () {
     const req = { params: { id: 1 } };
     const res = {};
 
@@ -146,5 +146,19 @@ describe('Testando a camada controller de products', function () {
     await productsController.deleteProduct(req,res);
 
     expect(res.status).to.have.been.calledWith(204);
+  })
+  it('Testando função search', async function () {
+    const req = { query: { q: 'th' } };
+    const res = {};
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    sinon.stub(productsService, 'search').resolves({ type: null, message: happyQueryByRouteParam });
+
+    await productsController.search(req,res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(happyQueryByRouteParam)
   })
 })

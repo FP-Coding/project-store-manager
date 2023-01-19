@@ -14,7 +14,19 @@ const happyQueryById = {
   "name": "Martelo de Thor"
 }
 
+const happyQueryByRouteParam = [
+  {
+    "id": 1,
+    "name": "Martelo de Thor"
+  },
+  {
+    "id": 3,
+    "name": "Manopla do Thanos"
+  }
+]
+
 module.exports = {
   happyQueryAll,
   happyQueryById,
+  happyQueryByRouteParam,
 }
